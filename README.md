@@ -9,10 +9,13 @@ Fonte: DHN (http://www.mar.mil.br/dhn/chm/box-previsao-mare/tabuas/)
 
 ##Informe o código da cidade
 
- var cod = 40118;
+~Verifique o código da cidade na tabela "x" e chame a função "setCod"
+
+ Ex.:
+ setCod(40118);
 
 ## Obtenha a tablea do dia
 
-getTableOfWater();
+~Obtenha a tabela do dia, em formato JSON, usando "getTableOfWater".
 
-return JSON
+getTableOfWater();

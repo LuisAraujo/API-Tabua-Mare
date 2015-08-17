@@ -66,16 +66,22 @@
 
     var dados;
 
-    $.ajax({
-        type: "POST",
-        url: "getSite.php?cod="+cod+"&dia="+today.getDate()+"&mes="+today.getMonth()+"&ano=15",
-        dataType: "html",
-        data:dados,
-        contentType: "charset=UTF-8",
-        success:getData
-    });
 
-    function getData(dados){
+    //Start geting data
+    function getData(){
+            $.ajax({
+                type: "POST",
+                url: "getSite.php?cod="+cod+"&dia="+today.getDate()+"&mes="+today.getMonth()+"&ano=15",
+                dataType: "html",
+                data:dados,
+                contentType: "charset=UTF-8",
+                success:setTableOfWater
+            });
+    }
+
+    //Set value in tableOfWaterJSON
+    //@param html
+    function setTableOfWater(dados){
         tableOfWaterJSON = parser(dados);
         printScreen();
     }
@@ -85,11 +91,14 @@
         $("body").html( getTableOfWater());
     }
 
+    //Get value in tableOfWaterJSON
+    //@return JSON
     function getTableOfWater(){
         return tableOfWaterJSON;
     }
 
-    //Converte a página
+    //Convert HTML and get Values os Day
+    //@return JSON
     function parser(html){
 
         //get all elements of table
@@ -153,10 +162,13 @@
     };
 
 
-    //util
+    //Util
     function trim(str) {
         return str.replace(/^\s+|\s+$/g,"");
     }
+
+    //Start get data
+    getData();
 
 </script>
 </body>
