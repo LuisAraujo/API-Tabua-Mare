@@ -29,7 +29,7 @@
     //ARRAY DE CIDADE;
 
     //codigo da cidade
-    var cod = 40118;
+    setCod(40118);
 
     var arrCity = new Array();
     arrCity[cod] = "Santo Amaro";
@@ -71,7 +71,7 @@
     function getData(){
             $.ajax({
                 type: "POST",
-                url: "getSite.php?cod="+cod+"&dia="+today.getDate()+"&mes="+today.getMonth()+"&ano=15",
+                url: "getSite.php?cod="+cod+"&dia="+today.getDate()+"&mes="+today.getMonth()+"&ano="+today.getFullYear(),
                 dataType: "html",
                 data:dados,
                 contentType: "charset=UTF-8",
@@ -83,9 +83,15 @@
     //@param html
     function setTableOfWater(dados){
         tableOfWaterJSON = parser(dados);
-        printScreen();
+        //$("body").html( dados);
+         printScreen();
     }
 
+    //Set cod of City - See in table 'CodOfTableCities'
+    //@param int
+    function setCod(param){
+        cod = param;
+    }
 
     function printScreen(){
         $("body").html( getTableOfWater());

@@ -18,4 +18,5 @@ Fonte: DHN (http://www.mar.mil.br/dhn/chm/box-previsao-mare/tabuas/)
 
 ~Obtenha a tabela do dia, em formato JSON, usando "getTableOfWater".
 
+Ex.:
 getTableOfWater();
