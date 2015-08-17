@@ -1,22 +1,38 @@
 API Tabua Maré
 =========================
 
-
 API para obtenção de dados da Tábua de Maré.
 Fonte: DHN (http://www.mar.mil.br/dhn/chm/box-previsao-mare/tabuas/)
 
-#Como Usar:
+Nota: Documentado com JsDOC -
 
-##Informe o código da cidade
+Desenvolvido com:
 
-~Verifique o código da cidade na tabela "x" e chame a função "setCod"
+* Jequery
+* Ajax (js e PHP)
 
- Ex.:
- setCod(40118);
+##Como Usar:
 
-## Obtenha a tablea do dia
+* Iniciar a API
 
-~Obtenha a tabela do dia, em formato JSON, usando "getTableOfWater".
+~Verifique o código da localidade em "arrLocations" (bdLocations.js) e passa como parámetro para a função "startAPI"
 
 Ex.:
-getTableOfWater();
+startAPI(40118);
+
+* Obtenha a tablea do dia
+
+~Acesse a tabela do dia, em formato JSON, com "getTableOfWater".
+
+Ex.:
+var JSON = getTableOfWater();
+console.log(JSON);
+
+~Implemente sua lógica em "APIready".
+
+Ex.:
+function APIready(){
+
+    $("body").html(getTableOfWater());
+}
+

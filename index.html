@@ -2,180 +2,18 @@
 <html>
 <head>
     <title>API Tabua Maré</title>
-    <script src="jquery.js"></script>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="description" content="API for get data about table water">
+    <meta name="author" content="Luis Araujo">
+
+    <script src="script/jquery.js"></script>
+    <script src="script/TableDay.js"></script>
+    <script src="script/bdLocations.js"></script>
+    <script src="script/api.js"></script>
+    <script src="script/main.js"></script>
+
 </head>
 <body>
 
-
-<script>
-
-    var tableOfWaterJSON;
-
-    //TYPE TABLEDAY
-    var tableDay = function(){
-        this.day = "";
-        this.date = "";
-        this.hour1 = "";
-        this.height1 = "";
-        this.hour2 = "";
-        this.height2 = "";
-        this.hour3 = "";
-        this.height3 = "";
-        this.hour4 = "";
-        this.height4 = "";
-    }
-
-    //ARRAY DE CIDADE;
-
-    //codigo da cidade
-    setCod(40118);
-
-    var arrCity = new Array();
-    arrCity[cod] = "Santo Amaro";
-    //DATE
-    var today = new Date();
-    if(today.getDate()<10)
-        today.day = "0"+today.getDate();
-    else
-        today.day = today.getDate();
-
-    if(today.getMonth()<10)
-        today.mes = "0"+(today.getMonth()+1);
-    else
-        today.mes = today.getMonth()+1;
-
-    today.ano = today.getFullYear();
-
-    today.data_ext = today.day+"/"+today.mes+"/"+today.ano;
-
-    if(today.getDay()==0)
-        today.dia_ext = "Dom";
-    else if(today.getDay()==1)
-        today.dia_ext = "Segunda";
-    else if(today.getDay()==2)
-        today.dia_ext = "Terça";
-    else if(today.getDay()==3)
-        today.dia_ext = "Quarta";
-    else if(today.getDay()==4)
-        today.dia_ext = "Quinta";
-    else if(today.getDay()==5)
-        today.dia_ext = "Sexta";
-    else if(today.getDay()==6)
-        today.dia_ext = "Sábado";
-
-    var dados;
-
-
-    //Start geting data
-    function getData(){
-            $.ajax({
-                type: "POST",
-                url: "getSite.php?cod="+cod+"&dia="+today.getDate()+"&mes="+today.getMonth()+"&ano="+today.getFullYear(),
-                dataType: "html",
-                data:dados,
-                contentType: "charset=UTF-8",
-                success:setTableOfWater
-            });
-    }
-
-    //Set value in tableOfWaterJSON
-    //@param html
-    function setTableOfWater(dados){
-        tableOfWaterJSON = parser(dados);
-        //$("body").html( dados);
-         printScreen();
-    }
-
-    //Set cod of City - See in table 'CodOfTableCities'
-    //@param int
-    function setCod(param){
-        cod = param;
-    }
-
-    function printScreen(){
-        $("body").html( getTableOfWater());
-    }
-
-    //Get value in tableOfWaterJSON
-    //@return JSON
-    function getTableOfWater(){
-        return tableOfWaterJSON;
-    }
-
-    //Convert HTML and get Values os Day
-    //@return JSON
-    function parser(html){
-
-        //get all elements of table
-        allTable = $(html).find("table").find("tr");
-        a = null;
-        for(i = 0; i < allTable.length; i++){
-            //get each 'tr' of table
-            element = allTable[i];
-
-            // //get each 'td' of table
-            tdInTable = $(element).find("td");
-
-            //get all tds
-            for(j= 0; j< $(tdInTable).length; j++){
-
-                textNo = $(tdInTable)[j].outerText;
-                if(trim(textNo) != ""){
-
-                    textSplit = textNo.split(" ");
-                    for(l= 0; l< textSplit.length; l++){
-
-                        if( (textSplit[l]!="") && (textSplit[l]!= "") )
-
-                            if( textSplit[l] == today.data_ext ){
-                                a = new tableDay();
-                                a.date = textSplit[l];
-                                a.day = today.dia_ext;
-
-                            }else if(a != null){
-                                if (a.hour1==""){
-                                    a.hour1 = textSplit[l];
-                                }else if (a.height1==""){
-                                    a.height1 = textSplit[l];
-                                }else if (a.hour2==""){
-                                    a.hour2 = textSplit[l];
-                                }else if (a.height2==""){
-                                    a.height2 = textSplit[l];
-                                }else if (a.hour3==""){
-                                    a.hour3 = textSplit[l];
-                                }else if (a.height3==""){
-                                    a.height3 = textSplit[l];
-                                }else if (a.hour4==""){
-                                    a.hour4 = textSplit[l];
-                                }else if (a.height4==""){
-                                    a.height4 = textSplit[l];
-                                }else{
-                                    strReturn = "{'apiVersion':'1.0', 'data':{ 'location':'"+ arrCity[cod]+"', 'dia':'"+a.day+"', 'data':'"+ a.date+"', " +
-                                            "'hora1':'"+ a.hour1+"', 'altura1':'"+ a.height1+"', 'hora2':'"+ a.hour2+"', 'altura2':'"+ a.height2+"' " +
-                                            "'hora3':'"+ a.hour3+"', 'altura3':'"+ a.height3+"', 'hora4':'"+ a.hour4+"', 'altura4':'"+ a.height4+"' " +
-                                            "}}";
-
-                                    return strReturn;
-
-                                }
-
-                            }
-                    }
-                }
-            }
-        }
-    };
-
-
-    //Util
-    function trim(str) {
-        return str.replace(/^\s+|\s+$/g,"");
-    }
-
-    //Start get data
-    getData();
-
-</script>
 </body>
 </html>
