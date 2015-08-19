@@ -1,23 +1,27 @@
 /**
 * Data os table day
+* @namespace
 * @type {JSON}
 */
 var tableOfWaterJSON;
 
 /**
- * Cod of location
- * @type {int}
- */
+* Cod of location
+* @namespace
+* @type {int}
+*/
 var cod;
 
 /**
- * Date today
- * @type {Date}
- */
+* Date today
+* @namespace
+* @type {Date}
+*/
 var today = new Date();
 
 /**
 * Array of Locations
+* @namespace
 * @type {Array}
 */
 var targetLocation;
@@ -65,7 +69,7 @@ function setDate(param){
     param.data_ext = param.day+"/"+param.mes+"/"+param.ano;
 
     if(param.getDay()==0)
-        param.dia_ext = "Dom";
+        param.dia_ext = "Domindo";
     else if(param.getDay()==1)
         param.dia_ext = "Segunda";
     else if(param.getDay()==2)
@@ -166,8 +170,8 @@ function parser(html){
             if(trim(textNo) != ""){
 
                 textSplit = textNo.split(" ");
-                for(l= 0; l< textSplit.length; l++){
-
+                for(l=0; l< textSplit.length; l++){
+                   // console.log(l);
                     if( (textSplit[l]!="") && (textSplit[l]!= "") )
 
                         if( textSplit[l] == today.data_ext ){
@@ -188,15 +192,15 @@ function parser(html){
                                 a.hour3 = textSplit[l];
                             }else if (a.height3==""){
                                 a.height3 = textSplit[l];
-                            }else if (a.hour4==""){
+                            }else if ( (a.hour4=="") && (valitadeHour(textSplit[l])) ){
                                 a.hour4 = textSplit[l];
-                            }else if (a.height4==""){
+                            }else if ( (a.hour4!="") && (a.height4=="") ){
                                 a.height4 = textSplit[l];
                             }else{
                                 //formating JSON
-                                strReturn = "{'apiVersion':'1.0', 'data':{ 'location':'"+targetLocation+"', 'dia':'"+a.day+"', 'data':'"+ a.date+"', " +
-                                    "'hora1':'"+ a.hour1+"', 'altura1':'"+ a.height1+"', 'hora2':'"+ a.hour2+"', 'altura2':'"+ a.height2+"' " +
-                                    "'hora3':'"+ a.hour3+"', 'altura3':'"+ a.height3+"', 'hora4':'"+ a.hour4+"', 'altura4':'"+ a.height4+"' " +
+                                strReturn = "{'apiVersion':'1.0', 'data':{ 'location':'"+targetLocation+"', 'day':'"+a.day+"', 'date':'"+ a.date+"', " +
+                                    "'hour1':'"+ a.hour1+"', 'height1':'"+ a.height1+"', 'hour2':'"+ a.hour2+"', 'height2':'"+ a.height2+"' " +
+                                    "'hour3':'"+ a.hour3+"', 'height3':'"+ a.height3+"', 'hour4':'"+ a.hour4+"', 'height4':'"+ a.height4+"' " +
                                     "}}";
 
                                 return strReturn;
@@ -220,4 +224,18 @@ function parser(html){
  */
 function trim(str) {
     return str.replace(/^\s+|\s+$/g,"");
+}
+
+
+function valitadeHour(hour){
+     hour = trim(hour);
+    if((  isInteger(hour[0])) && ( isInteger(hour[1])) && (hour[2]==':') && (isInteger(hour[3]))&& (isInteger(hour[4]))){
+        return true;
+     }
+
+    return false;
+}
+
+function isInteger(str) {
+    return /^\+?(0|[1-9]\d*)$/.test(str);
 }
