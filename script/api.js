@@ -33,7 +33,6 @@ var targetLocation;
 * @param cod {int} cod of target location
 */
 function startAPI(cod){
-
     //Setting of cod of location
     setCod(cod);
 
@@ -91,18 +90,30 @@ function setDate(param){
 * @exemplo
 * getData();
 * @param {function} cd - The callback has data of page
+ *
+ * cod="+cod+"&dia="+today.getDate()+"&mes="+today.getMonth()+"&ano="+today.getFullYear(),
 */
 function getData(cb){
+
     var dados;
+
+	//console.log("getSite.php?cod="+getCod()+"&dia="+today.getDate()+"&mes="+today.getMonth()+"&ano="+today.getFullYear());
+	
     $.ajax({
         type: "POST",
-        url: "getSite.php?cod="+cod+"&dia="+today.getDate()+"&mes="+today.getMonth()+"&ano="+today.getFullYear(),
+        url: "getSite.php?cod="+getCod()+"&dia="+today.getDate()+"&mes="+today.getMonth()+"&ano="+today.getFullYear(),
         dataType: "html",
         data:dados,
         contentType: "charset=UTF-8",
-        success:cb
-    });
+        success:cb,
+        error: erroAjax
+    }); 
 }
+
+
+function erroAjax (XMLHttpRequest, textStatus, errorThrown){
+    $("#body").append("Erro: "+XMLHttpRequest.responseText);
+};
 
 /**
  * Set value in variable tableOfWaterJSON and call APIready
@@ -111,9 +122,12 @@ function getData(cb){
  * @param {html} param - data of page
  */
 function setTableOfWater(param){
+
     tableOfWaterJSON = parser(param);
+
     //call when ready
-    APIready();
+    APIready(tableOfWaterJSON);
+
 }
 
 /**
@@ -126,6 +140,11 @@ function setCod(param){
     cod = param;
     targetLocation = arrLocations[cod];
 }
+
+function getCod(){
+	return cod;
+}
+
 /**
  * Print JSON in page html
  * @function
@@ -152,9 +171,28 @@ function getTableOfWater(){
 * @return {JSON}  data of table of water of today of target location
 */
 function parser(html){
-
+	
     //get all elements of table
-    allTable = $(html).find("table").find("tr");
+	var turntrue = true;
+	var i=0;
+	;
+	while( (turntrue) &&  (i < html.length) ){
+	 //console.log(html[i]);
+	  if( (html[i+1]== "<") && (html[i+2]=="B")){
+		 turntrue = false;
+	  }
+	  i++;
+	}
+	
+	//console.log(i, html.length)
+	html2 = html.substr(i, html.length-1);
+	//console.log(i, html2.length)
+	html = "<HTML>"+html2;
+		
+	
+	allTable = $(html).find("table").find("tr");	
+	
+	//console.log(allTable.length);
     a = null;
     for(i = 0; i < allTable.length; i++){
         //get each 'tr' of table
@@ -163,23 +201,31 @@ function parser(html){
         // //get each 'td' of table
         tdInTable = $(element).find("td");
 
+
         //get all tds
         for(j= 0; j< $(tdInTable).length; j++){
 
-            textNo = $(tdInTable)[j].outerText;
+            textNo = tdInTable[j].innerHTML.toString();
+  
             if(trim(textNo) != ""){
-
+										
                 textSplit = textNo.split(" ");
+			
                 for(l=0; l< textSplit.length; l++){
-                   // console.log(l);
-                    if( (textSplit[l]!="") && (textSplit[l]!= "") )
+                    
+                    if( (textSplit[l]!="") && (textSplit[l]!= " ") )
 
                         if( textSplit[l] == today.data_ext ){
+						
+						//console.log(textSplit[l] +"   "+ today.data_ext );
+						
                             a = new TableDay();
                             a.date = textSplit[l];
                             a.day = today.dia_ext;
 
                         }else if(a != null){
+					
+						
                             if (a.hour1==""){
                                 a.hour1 = textSplit[l];
                             }else if (a.height1==""){
@@ -198,20 +244,25 @@ function parser(html){
                                 a.height4 = textSplit[l];
                             }else{
                                 //formating JSON
-                                strReturn = "{'apiVersion':'1.0', 'data':{ 'location':'"+targetLocation+"', 'day':'"+a.day+"', 'date':'"+ a.date+"', " +
+                                strReturn = "{'apiVersion':'1.0', 'data':{ 'location':'"+targetLocation+"', 'day':'"+a.day+"', 'date':'"+ a.date+"', "+
                                     "'hour1':'"+ a.hour1+"', 'height1':'"+ a.height1+"', 'hour2':'"+ a.hour2+"', 'height2':'"+ a.height2+"' " +
                                     "'hour3':'"+ a.hour3+"', 'height3':'"+ a.height3+"', 'hour4':'"+ a.hour4+"', 'height4':'"+ a.height4+"' " +
                                     "}}";
+
+                                startAPI(strReturn);
 
                                 return strReturn;
 
                             }
 
                         }
+
                 }
             }
         }
     }
+
+
 };
 
 
@@ -221,15 +272,17 @@ function parser(html){
  * @name trim
  * @param str {String}
  * @returns {XML|string|void|*}
- */
+*/
 function trim(str) {
-    return str.replace(/^\s+|\s+$/g,"");
+  	return  str.toString().replace(/^\s+|\s+$/g,"");
+	
 }
-
+ 
 
 function valitadeHour(hour){
      hour = trim(hour);
-    if((  isInteger(hour[0])) && ( isInteger(hour[1])) && (hour[2]==':') && (isInteger(hour[3]))&& (isInteger(hour[4]))){
+   
+   if((  isInteger(hour[0])) && ( isInteger(hour[1])) && (hour[2]==':') && (isInteger(hour[3]))&& (isInteger(hour[4]))){
         return true;
      }
 

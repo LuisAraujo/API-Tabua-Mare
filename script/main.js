@@ -1,8 +1,8 @@
 //Staring API
-startAPI(40118);
+startAPI(40140);
 
 //Insert your logic here
-function APIready(){
-
-    $("body").html(getTableOfWater());
+function APIready(dados){
+    $("#body").html(dados);
+	console.log(dados);
 }
