@@ -1,7 +1,43 @@
 API Tabua Maré
 =========================
+[Eng]
+> API for obtaining data from the Tide Table, using web scraping.
 
->API para obtenção de dados da Tábua de Maré.
+* Source: DHN (http://www.mar.mil.br/dhn/chm/box-previsao-mare/tabuas/)
+* Note: Documented with JsDOC
+* Developed with: Jquery and Ajax (js and PHP)
+
+### Version
+1.0
+### How to use:
+
+* Start the API
+
+> Check the locale code in "arrLocations" (bdLocations.js) and pass it as a parameter to the "startAPI"
+
+```sh
+StartAPI (40118);
+```
+
+* Get the table of the day
+
+> Access the table of the day, in JSON format, with "getTableOfWater".
+
+```sh
+var JSON = getTableOfWater ();
+Console.log (JSON);
+```
+
+> Implement your logic in "APIready".
+
+```sh
+function APIready () {
+     $ ("Body"). Html (getTableOfWater ());
+}
+```
+
+[Pt-Br]
+>API para obtenção de dados da Tábua de Maré, usando web scraping.
 
 * Fonte: DHN (http://www.mar.mil.br/dhn/chm/box-previsao-mare/tabuas/)
 * Nota: Documentado com JsDOC 
