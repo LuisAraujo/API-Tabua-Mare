@@ -1,0 +1,56 @@
+<html>
+<head>
+  <title>Converting PDF To Text using pdf.js</title>
+  <style>
+  html, body { width: 100%; height: 100%; overflow-y: hidden; padding: 0; margin: 0; }
+  body { font: 13px Helvetica,sans-serif; }
+  body > div { width: 48%; height: 100%; overflow-y: auto; display: inline-block; vertical-align: top; }
+  iframe { border: none; width: 100%; height: 100%; }
+  #output { padding: 10px; box-shadow: 0 0 5px #777; border-radius: 5px; margin: 10px; }
+  #processor { height: 70px; }
+  </style>
+</head>
+
+<body>
+  <div>
+    <!-- embed the pdftotext web app as an iframe -->
+    <iframe id="processor" src="pdftotext.processor.html"></iframe>
+    
+    <!-- a container for the output -->
+    <div id="output"><div id="intro">Extracting text from a PDF file using only Javascript.<br>Tested in Chrome 16 and Firefox 9.</div></div>
+  </div>
+  
+  <div>
+    <!-- the PDF file must be on the same domain as this page -->
+    <iframe id="input" src="fundeadouro_de_salinopolis_2018.pdf"></iframe>
+  </div>
+    
+  <script>
+  var input = document.getElementById("input");
+  var processor = document.getElementById("processor");
+  var output = document.getElementById("output");
+  
+  window.addEventListener("message", function(event){
+    if (event.source != processor.contentWindow) return;
+    
+    switch (event.data){
+      case "ready":
+        var xhr = new XMLHttpRequest;
+        xhr.open('GET', input.getAttribute("src"), true);
+        xhr.responseType = "arraybuffer";
+
+        xhr.onload = function(event) {
+          processor.contentWindow.postMessage(this.response, "*");
+        };
+
+        xhr.send();
+      break;
+      
+      default:
+        output.textContent = event.data.replace(/\s+/g, " ");
+      break;
+    }
+  }, true);
+  </script>
+</body>
+</html>

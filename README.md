@@ -1,6 +1,11 @@
 API Tabua Maré
 =========================
 [Eng]
+
+NOTE: This API is broken, 'cause the Marinha Brasileira deleted the table page. We are make a second 
+version for obtaining data from new database using as base the project "pdftotext" of @hubgit. 
+
+
 > API for obtaining data from the Tide Table, using web scraping.
 
 * Source: DHN (http://www.mar.mil.br/dhn/chm/box-previsao-mare/tabuas/)

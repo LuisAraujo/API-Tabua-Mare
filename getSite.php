@@ -30,6 +30,10 @@ else if($mes == 11)
      $mes="Dez";
 
 
+$cod = "40140";
+$mes = "0";
+$ano = "2018";
+
 	 echo 'http://www.mar.mil.br/dhn/chm/box-previsao-mare/tabuas/'.$cod."".$mes."".$ano.'.htm';
 	 
 $url = file_get_contents('http://www.mar.mil.br/dhn/chm/box-previsao-mare/tabuas/'.$cod."".$mes."".$ano.'.htm');

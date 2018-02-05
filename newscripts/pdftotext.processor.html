@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>PDFToText</title>
+  <style>.textLayer { display: none; }</style>
+</head>
+
+<body style="font:13px Helvetica,sans-serif">
+  <div id="message">Loading...</div>
+  <div id="viewer" style="display:none"></div>
+ 
+
+  <script id="pdf-js" src="pdftotext.pdf.js"></script>
+  <script>PDFJS.workerSrc = document.getElementById("pdf-js").getAttribute("src");</script>
+
+  <script src="pdftotext.app.js"></script>
+  <script>var app = new App;</script>
+</body>
+
+</html>
