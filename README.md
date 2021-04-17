@@ -52,7 +52,10 @@ function APIready (data) {
 * Desenvolvido com: PdfToText de @hubgit.
 
 ### Versão
-2.0
+3.0
+
+> Nota: todos os PDF de 2021 estão na pasta tables2021 (fonte Marinha do Brasil).
+
 ### Como Usar:
 
 * Iniciar a API
@@ -61,6 +64,12 @@ function APIready (data) {
 
 ```sh
 startAPI(10);
+```
+
+> Caso o script da API não esteja no mesmo nivel da sua aplicação, informe o prefíxo do diretório.
+
+```sh
+startAPI(10, "..");
 ```
 
 * Obtenha a tabela do dia
@@ -80,4 +89,14 @@ function APIready (data) {
      $ ("#body").append(data[i]);
 }
 ```
+
+### Exemplo
+
+Acesse a pasta "Example" para consultar exemplos:
+
+*idfixed*: usa um codigo fixo para obter os dados e exibe na main
+
+*idfromget*: usa o parâmetro cod via GET para obter os dados e exibe na main
+
+
 READE.md desenvolvido com http://dillinger.io/

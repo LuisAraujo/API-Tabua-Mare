@@ -1,4 +1,4 @@
-<?php
+<?php header('Access-Control-Allow-Origin: *'); 
 
 $cod = $_GET['cod'];
 $mes = $_GET['mes'];

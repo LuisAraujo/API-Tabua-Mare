@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>API Tabua Maré</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="description" content="API for get data about table water">
+	<meta name="author" content="Luis Araujo">
+	<script src="../../script/parseText.js"></script>
+	<script src="../../script/jquery.js"></script>
+	<script src="../../script/TableDay.js"></script>
+</head>
+
+<body>
+
+<div id="location"></div>
+<ul id="list"></ul>
+
+
+
+<!-- NOT CHANGE!! ->
+<div>
+<!-- embed the pdftotext web app as an iframe -->
+<iframe style="display:none" id="processor" src="../../script/pdftotext.processor.html"></iframe>
+</div>
+
+<div>
+<!-- the PDF file must be on the same domain as this page -->
+<iframe style="display:none" id="input" src=""></iframe>
+</div>
+	<script src="../../script/apimain.js"></script>
+    <script src="../../script/bdLocations.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
