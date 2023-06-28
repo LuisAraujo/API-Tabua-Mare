@@ -56,6 +56,8 @@ function APIready (data) {
 
 > Nota: todos os PDF de 2021 estão na pasta tables2021 (fonte Marinha do Brasil).
 
+> Nota 2: para acessar outros anos, basta criar a pasta tablesANO e modificar a variável folder em bdLocations.
+
 ### Como Usar:
 
 * Iniciar a API
